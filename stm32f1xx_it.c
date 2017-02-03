@@ -1,10 +1,16 @@
 /**
   ******************************************************************************
-  * @file    stm32f1xx_it.c
-  * @brief   Interrupt Service Routines.
+  * @file    SPI/SPI_FullDuplex_ComPolling/Src/stm32f1xx_it.c
+  * @author  MCD Application Team
+  * @version V1.4.0
+  * @date    29-April-2016
+  * @brief   Main Interrupt Service Routines.
+  *          This file provides template for all exceptions handler and 
+  *          peripherals interrupt service routine.
   ******************************************************************************
+  * @attention
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -30,175 +36,150 @@
   *
   ******************************************************************************
   */
+
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f1xx_hal.h"
-#include "stm32f1xx.h"
+#include "main.h"
 #include "stm32f1xx_it.h"
 
-/* USER CODE BEGIN 0 */
+/** @addtogroup STM32F1xx_HAL_Examples
+  * @{
+  */
 
-/* USER CODE END 0 */
+/** @addtogroup SPI_FullDuplex_ComPolling
+  * @{
+  */
 
-/* External variables --------------------------------------------------------*/
-
-extern TIM_HandleTypeDef htim2;
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
 
 /******************************************************************************/
-/*            Cortex-M3 Processor Interruption and Exception Handlers         */ 
+/*            Cortex-M3 Processor Exceptions Handlers                         */
 /******************************************************************************/
 
 /**
-* @brief This function handles Non maskable interrupt.
-*/
+  * @brief   This function handles NMI exception.
+  * @param  None
+  * @retval None
+  */
 void NMI_Handler(void)
 {
-  /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
-
-  /* USER CODE END NonMaskableInt_IRQn 0 */
-  /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
-
-  /* USER CODE END NonMaskableInt_IRQn 1 */
 }
 
 /**
-* @brief This function handles Hard fault interrupt.
-*/
+  * @brief  This function handles Hard Fault exception.
+  * @param  None
+  * @retval None
+  */
 void HardFault_Handler(void)
 {
-  /* USER CODE BEGIN HardFault_IRQn 0 */
-
-  /* USER CODE END HardFault_IRQn 0 */
+  /* Go to infinite loop when Hard Fault exception occurs */
   while (1)
   {
   }
-  /* USER CODE BEGIN HardFault_IRQn 1 */
-
-  /* USER CODE END HardFault_IRQn 1 */
 }
 
 /**
-* @brief This function handles Memory management fault.
-*/
+  * @brief  This function handles Memory Manage exception.
+  * @param  None
+  * @retval None
+  */
 void MemManage_Handler(void)
 {
-  /* USER CODE BEGIN MemoryManagement_IRQn 0 */
-
-  /* USER CODE END MemoryManagement_IRQn 0 */
+  /* Go to infinite loop when Memory Manage exception occurs */
   while (1)
   {
   }
-  /* USER CODE BEGIN MemoryManagement_IRQn 1 */
-
-  /* USER CODE END MemoryManagement_IRQn 1 */
 }
 
 /**
-* @brief This function handles Prefetch fault, memory access fault.
-*/
+  * @brief  This function handles Bus Fault exception.
+  * @param  None
+  * @retval None
+  */
 void BusFault_Handler(void)
 {
-  /* USER CODE BEGIN BusFault_IRQn 0 */
-
-  /* USER CODE END BusFault_IRQn 0 */
+  /* Go to infinite loop when Bus Fault exception occurs */
   while (1)
   {
   }
-  /* USER CODE BEGIN BusFault_IRQn 1 */
-
-  /* USER CODE END BusFault_IRQn 1 */
 }
 
 /**
-* @brief This function handles Undefined instruction or illegal state.
-*/
+  * @brief  This function handles Usage Fault exception.
+  * @param  None
+  * @retval None
+  */
 void UsageFault_Handler(void)
 {
-  /* USER CODE BEGIN UsageFault_IRQn 0 */
-
-  /* USER CODE END UsageFault_IRQn 0 */
+  /* Go to infinite loop when Usage Fault exception occurs */
   while (1)
   {
   }
-  /* USER CODE BEGIN UsageFault_IRQn 1 */
-
-  /* USER CODE END UsageFault_IRQn 1 */
 }
 
 /**
-* @brief This function handles System service call via SWI instruction.
-*/
+  * @brief  This function handles SVCall exception.
+  * @param  None
+  * @retval None
+  */
 void SVC_Handler(void)
 {
-  /* USER CODE BEGIN SVCall_IRQn 0 */
-
-  /* USER CODE END SVCall_IRQn 0 */
-  /* USER CODE BEGIN SVCall_IRQn 1 */
-
-  /* USER CODE END SVCall_IRQn 1 */
 }
 
 /**
-* @brief This function handles Debug monitor.
-*/
+  * @brief  This function handles Debug Monitor exception.
+  * @param  None
+  * @retval None
+  */
 void DebugMon_Handler(void)
 {
-  /* USER CODE BEGIN DebugMonitor_IRQn 0 */
-
-  /* USER CODE END DebugMonitor_IRQn 0 */
-  /* USER CODE BEGIN DebugMonitor_IRQn 1 */
-
-  /* USER CODE END DebugMonitor_IRQn 1 */
 }
 
 /**
-* @brief This function handles Pendable request for system service.
-*/
+  * @brief  This function handles PendSVC exception.
+  * @param  None
+  * @retval None
+  */
 void PendSV_Handler(void)
 {
-  /* USER CODE BEGIN PendSV_IRQn 0 */
-
-  /* USER CODE END PendSV_IRQn 0 */
-  /* USER CODE BEGIN PendSV_IRQn 1 */
-
-  /* USER CODE END PendSV_IRQn 1 */
 }
 
 /**
-* @brief This function handles System tick timer.
-*/
+  * @brief  This function handles SysTick Handler.
+  * @param  None
+  * @retval None
+  */
 void SysTick_Handler(void)
 {
-  /* USER CODE BEGIN SysTick_IRQn 0 */
-
-  /* USER CODE END SysTick_IRQn 0 */
-  HAL_SYSTICK_IRQHandler();
-  /* USER CODE BEGIN SysTick_IRQn 1 */
-
-  /* USER CODE END SysTick_IRQn 1 */
+  HAL_IncTick();
 }
 
 /******************************************************************************/
-/* STM32F1xx Peripheral Interrupt Handlers                                    */
-/* Add here the Interrupt Handlers for the used peripherals.                  */
-/* For the available peripheral interrupt handler names,                      */
-/* please refer to the startup file (startup_stm32f1xx.s).                    */
+/*                 STM32F1xx Peripherals Interrupt Handlers                   */
+/*  Add here the Interrupt Handler for the used peripheral(s) (PPP), for the  */
+/*  available peripheral interrupt handler's name please refer to the startup */
+/*  file (startup_stm32f1xx.s).                                               */
 /******************************************************************************/
 
 /**
-* @brief This function handles TIM2 global interrupt.
-*/
-void TIM2_IRQHandler(void)
+  * @brief  This function handles PPP interrupt request.
+  * @param  None
+  * @retval None
+  */
+/*void PPP_IRQHandler(void)
 {
-  /* USER CODE BEGIN TIM2_IRQn 0 */
+}*/
 
-  /* USER CODE END TIM2_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim2);
-  /* USER CODE BEGIN TIM2_IRQn 1 */
+/**
+  * @}
+  */ 
 
-  /* USER CODE END TIM2_IRQn 1 */
-}
+/**
+  * @}
+  */
 
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

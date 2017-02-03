@@ -1,11 +1,14 @@
 /**
   ******************************************************************************
-  * File Name          : stm32f1xx_hal_msp.c
-  * Description        : This file provides code for the MSP Initialization 
-  *                      and de-Initialization codes.
+  * @file    SPI/SPI_FullDuplex_ComPolling/Src/stm32f1xx_hal_msp.c
+  * @author  MCD Application Team
+  * @version V1.4.0
+  * @date    29-April-2016
+  * @brief   HAL MSP module.
   ******************************************************************************
+  * @attention
   *
-  * COPYRIGHT(c) 2016 STMicroelectronics
+  * <h2><center>&copy; COPYRIGHT(c) 2016 STMicroelectronics</center></h2>
   *
   * Redistribution and use in source and binary forms, with or without modification,
   * are permitted provided that the following conditions are met:
@@ -31,305 +34,94 @@
   *
   ******************************************************************************
   */
+
 /* Includes ------------------------------------------------------------------*/
-#include "stm32f1xx_hal.h"
+#include "main.h"
 
-extern void Error_Handler(void);
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-/**
-  * Initializes the Global MSP.
+/** @addtogroup STM32F1xx_HAL_Examples
+  * @{
   */
-void HAL_MspInit(void)
+
+/** @defgroup SPI_FullDuplex_AdvComPolling
+  * @{
+  */
+
+/* Private typedef -----------------------------------------------------------*/
+/* Private define ------------------------------------------------------------*/
+/* Private macro -------------------------------------------------------------*/
+/* Private variables ---------------------------------------------------------*/
+/* Private function prototypes -----------------------------------------------*/
+/* Private functions ---------------------------------------------------------*/
+
+/** @defgroup HAL_MSP_Private_Functions
+  * @{
+  */
+
+/**
+  * @brief SPI MSP Initialization 
+  *        This function configures the hardware resources used in this example: 
+  *           - Peripheral's clock enable
+  *           - Peripheral's GPIO Configuration  
+  * @param hspi: SPI handle pointer
+  * @retval None
+  */
+void HAL_SPI_MspInit(SPI_HandleTypeDef *hspi)
 {
-  /* USER CODE BEGIN MspInit 0 */
+GPIO_InitTypeDef  GPIO_InitStruct;
 
-  /* USER CODE END MspInit 0 */
-
-  __HAL_RCC_AFIO_CLK_ENABLE();
-
-  HAL_NVIC_SetPriorityGrouping(NVIC_PRIORITYGROUP_4);
-
-  /* System interrupt init*/
-  /* MemoryManagement_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(MemoryManagement_IRQn, 0, 0);
-  /* BusFault_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(BusFault_IRQn, 0, 0);
-  /* UsageFault_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(UsageFault_IRQn, 0, 0);
-  /* SVCall_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SVCall_IRQn, 0, 0);
-  /* DebugMonitor_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DebugMonitor_IRQn, 0, 0);
-  /* PendSV_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(PendSV_IRQn, 0, 0);
-  /* SysTick_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(SysTick_IRQn, 0, 0);
-
-    /**NOJTAG: JTAG-DP Disabled and SW-DP Enabled 
-    */
-  __HAL_AFIO_REMAP_SWJ_NOJTAG();
-
-  /* USER CODE BEGIN MspInit 1 */
-
-  /* USER CODE END MspInit 1 */
-}
-
-void HAL_ADC_MspInit(ADC_HandleTypeDef* hadc)
-{
-
-  GPIO_InitTypeDef GPIO_InitStruct;
-  if(hadc->Instance==ADC1)
-  {
-  /* USER CODE BEGIN ADC1_MspInit 0 */
-
-  /* USER CODE END ADC1_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_ADC1_CLK_ENABLE();
-  
-    /**ADC1 GPIO Configuration    
-    PA3     ------> ADC1_IN3
-    PA4     ------> ADC1_IN4
-    PA5     ------> ADC1_IN5 
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5;
-    GPIO_InitStruct.Mode = GPIO_MODE_ANALOG;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN ADC1_MspInit 1 */
-
-  /* USER CODE END ADC1_MspInit 1 */
-  }
-
-}
-
-void HAL_ADC_MspDeInit(ADC_HandleTypeDef* hadc)
-{
-
-  if(hadc->Instance==ADC1)
-  {
-  /* USER CODE BEGIN ADC1_MspDeInit 0 */
-
-  /* USER CODE END ADC1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_ADC1_CLK_DISABLE();
-  
-    /**ADC1 GPIO Configuration    
-    PA3     ------> ADC1_IN3
-    PA4     ------> ADC1_IN4
-    PA5     ------> ADC1_IN5 
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5);
-
-  }
-  /* USER CODE BEGIN ADC1_MspDeInit 1 */
-
-  /* USER CODE END ADC1_MspDeInit 1 */
-
-}
-
-void HAL_CRC_MspInit(CRC_HandleTypeDef* hcrc)
-{
-
-  if(hcrc->Instance==CRC)
-  {
-  /* USER CODE BEGIN CRC_MspInit 0 */
-
-  /* USER CODE END CRC_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_CRC_CLK_ENABLE();
-  /* USER CODE BEGIN CRC_MspInit 1 */
-
-  /* USER CODE END CRC_MspInit 1 */
-  }
-
-}
-
-void HAL_CRC_MspDeInit(CRC_HandleTypeDef* hcrc)
-{
-
-  if(hcrc->Instance==CRC)
-  {
-  /* USER CODE BEGIN CRC_MspDeInit 0 */
-
-  /* USER CODE END CRC_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_CRC_CLK_DISABLE();
-  }
-  /* USER CODE BEGIN CRC_MspDeInit 1 */
-
-  /* USER CODE END CRC_MspDeInit 1 */
-
-}
-
-void HAL_SPI_MspInit(SPI_HandleTypeDef* hspi)
-{
-
-  GPIO_InitTypeDef GPIO_InitStruct;
-  if(hspi->Instance==SPI1)
-  {
-  /* USER CODE BEGIN SPI1_MspInit 0 */
+  if(hspi->Instance == SPIx)
+  {     
+    /*##-1- Enable peripherals and GPIO Clocks #################################*/
+    /* Enable GPIO TX/RX clock */
+    SPIx_SCK_GPIO_CLK_ENABLE();
+    SPIx_MISO_GPIO_CLK_ENABLE();
+    SPIx_MOSI_GPIO_CLK_ENABLE();
+    /* Enable SPI clock */
+    SPIx_CLK_ENABLE(); 
     
+    /*##-2- Configure peripheral GPIO ##########################################*/  
+    /* SPI SCK GPIO pin configuration  */
+    GPIO_InitStruct.Pin       = SPIx_SCK_PIN;
+    GPIO_InitStruct.Mode      = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull      = GPIO_PULLDOWN;
+    GPIO_InitStruct.Speed     = GPIO_SPEED_FREQ_LOW;
+    HAL_GPIO_Init(SPIx_SCK_GPIO_PORT, &GPIO_InitStruct);
 
-  /* USER CODE END SPI1_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_SPI1_CLK_ENABLE();
-  
-    /**SPI1 GPIO Configuration    
-    PA15     ------> SPI1_NSS
-    PB3     ------> SPI1_SCK
-    PB4     ------> SPI1_MISO
-    PB5     ------> SPI1_MOSI 
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_15;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+    /* SPI MISO GPIO pin configuration  */
+    GPIO_InitStruct.Pin = SPIx_MISO_PIN;
+    HAL_GPIO_Init(SPIx_MISO_GPIO_PORT, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_3|GPIO_PIN_5;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_4;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
-    __HAL_AFIO_REMAP_SPI1_ENABLE();
-
-  /* USER CODE BEGIN SPI1_MspInit 1 */
-
-  /* USER CODE END SPI1_MspInit 1 */
+    /* SPI MOSI GPIO pin configuration  */
+    GPIO_InitStruct.Pin = SPIx_MOSI_PIN;
+    HAL_GPIO_Init(SPIx_MOSI_GPIO_PORT, &GPIO_InitStruct);
   }
-
 }
 
-void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
+/**
+  * @brief SPI MSP De-Initialization 
+  *        This function frees the hardware resources used in this example:
+  *          - Disable the Peripheral's clock
+  *          - Revert GPIO configuration to its default state
+  * @param hspi: SPI handle pointer
+  * @retval None
+  */
+void HAL_SPI_MspDeInit(SPI_HandleTypeDef *hspi)
 {
-
-  if(hspi->Instance==SPI1)
-  {
-  /* USER CODE BEGIN SPI1_MspDeInit 0 */
-
-  /* USER CODE END SPI1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_SPI1_CLK_DISABLE();
-  
-    /**SPI1 GPIO Configuration    
-    PA15     ------> SPI1_NSS
-    PB3     ------> SPI1_SCK
-    PB4     ------> SPI1_MISO
-    PB5     ------> SPI1_MOSI 
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_15);
-
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_3|GPIO_PIN_4|GPIO_PIN_5);
-
+  if(hspi->Instance == SPIx)
+  {   
+    /*##-1- Disable peripherals and GPIO Clocks ################################*/
+    /* Configure SPI SCK as alternate function  */
+    HAL_GPIO_DeInit(SPIx_SCK_GPIO_PORT, SPIx_SCK_PIN);
+    /* Configure SPI MISO as alternate function  */
+    HAL_GPIO_DeInit(SPIx_MISO_GPIO_PORT, SPIx_MISO_PIN);
+    /* Configure SPI MOSI as alternate function  */
+    HAL_GPIO_DeInit(SPIx_MOSI_GPIO_PORT, SPIx_MOSI_PIN);
   }
-  /* USER CODE BEGIN SPI1_MspDeInit 1 */
-
-  /* USER CODE END SPI1_MspDeInit 1 */
-
 }
 
-void HAL_TIM_Base_MspInit(TIM_HandleTypeDef* htim_base)
-{
-
-  if(htim_base->Instance==TIM1)
-  {
-  /* USER CODE BEGIN TIM1_MspInit 0 */
-
-  /* USER CODE END TIM1_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_TIM1_CLK_ENABLE();
-  /* USER CODE BEGIN TIM1_MspInit 1 */
-
-  /* USER CODE END TIM1_MspInit 1 */
-  }
-
-}
-
-void HAL_TIM_Base_MspDeInit(TIM_HandleTypeDef* htim_base)
-{
-
-  if(htim_base->Instance==TIM1)
-  {
-  /* USER CODE BEGIN TIM1_MspDeInit 0 */
-
-  /* USER CODE END TIM1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_TIM1_CLK_DISABLE();
-  }
-  /* USER CODE BEGIN TIM1_MspDeInit 1 */
-
-  /* USER CODE END TIM1_MspDeInit 1 */
-
-}
-
-void HAL_UART_MspInit(UART_HandleTypeDef* huart)
-{
-
-  GPIO_InitTypeDef GPIO_InitStruct;
-  if(huart->Instance==USART1)
-  {
-  /* USER CODE BEGIN USART1_MspInit 0 */
-
-  /* USER CODE END USART1_MspInit 0 */
-    /* Peripheral clock enable */
-    __HAL_RCC_USART1_CLK_ENABLE();
-  
-    /**USART1 GPIO Configuration    
-    PA9     ------> USART1_TX
-    PA10     ------> USART1_RX
-    PA11     ------> USART1_CTS 
-    */
-    GPIO_InitStruct.Pin = GPIO_PIN_9;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_HIGH;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-    GPIO_InitStruct.Pin = GPIO_PIN_10|GPIO_PIN_11;
-    GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
-    GPIO_InitStruct.Pull = GPIO_NOPULL;
-    HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
-
-  /* USER CODE BEGIN USART1_MspInit 1 */
-
-  /* USER CODE END USART1_MspInit 1 */
-  }
-
-}
-
-void HAL_UART_MspDeInit(UART_HandleTypeDef* huart)
-{
-
-  if(huart->Instance==USART1)
-  {
-  /* USER CODE BEGIN USART1_MspDeInit 0 */
-
-  /* USER CODE END USART1_MspDeInit 0 */
-    /* Peripheral clock disable */
-    __HAL_RCC_USART1_CLK_DISABLE();
-  
-    /**USART1 GPIO Configuration    
-    PA9     ------> USART1_TX
-    PA10     ------> USART1_RX
-    PA11     ------> USART1_CTS 
-    */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_9|GPIO_PIN_10|GPIO_PIN_11);
-
-  }
-  /* USER CODE BEGIN USART1_MspDeInit 1 */
-
-  /* USER CODE END USART1_MspDeInit 1 */
-
-}
-
-/* USER CODE BEGIN 1 */
-
-/* USER CODE END 1 */
+/**
+  * @}
+  */
 
 /**
   * @}
